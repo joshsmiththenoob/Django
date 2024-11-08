@@ -21,5 +21,5 @@ from posts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include("posts.urls")),
-    path("<int:id>/", views.google)
+    path("<int:id>/", views.google),
 ]

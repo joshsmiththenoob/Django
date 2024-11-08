@@ -1,38 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLog Home Page</title>
-</head>
-<body>
-    <!-- Use double parenthesis will access value from specific variable -->
-    <!-- <h1>Welcome - {{posts}}</h1> -->
-    <!-- Use single parenthesis and percentage sign could utilize tag in Django Template Language to get controll flow
-        like if-else statement and for loop statement in HTML -->
-    
-    <!-- {% if posts %}
+{% extends "base.html" %}
 
-        <h1> All posts available</h1>
+{% block title %}
+Home.html
+{% endblock title %}
 
-    {% endif%} --> 
 
-        <h1>{{username | capfirst | truncatechars:5}}</h1>
+{% block body %}
 
-        {% for post in posts  %}
-            <!-- forloop.count: return the current iteration but it starts from one.  -->
-        forloop.first = {{forloop.first}}, forloop.last = {{forloop.last}}
-            {% if forloop.last %}
-                first loop
-            {% endif %}
-            <!--  Need to use "." to access value of specific key in dictionary,-->
-            
-            <a href="/posts/{{post.id}}"><h1>{{forloop.counter0}} - {{post.title | title}}</h1></a>
-            <p>{{post.content | truncatewords:5}}</p>
-        {% empty %}
-            <h1>No posts Avaiable</h1>
-        {% endfor %}
+    <h1>{{username | capfirst | truncatechars:5}}</h1>
+
+    {% for post in posts  %}
+        <!-- forloop.count: return the current iteration but it starts from one.  -->
+    forloop.first = {{forloop.first}}, forloop.last = {{forloop.last}}
+        {% if forloop.last %}
+            first loop
+        {% endif %}
+        <!--  Need to use "." to access value of specific key in dictionary,-->
         
+        <a href={% url "post" post.id%}><h1>{{forloop.counter0}} - {{post.title | title}}</h1></a>
+        <p>{{post.content | truncatewords:5}}</p>
+    {% empty %}
+        <h1>No posts Avaiable</h1>
+    {% endfor %}
 
-</body>
-</html>
+{% endblock body %}
