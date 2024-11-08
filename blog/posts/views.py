@@ -33,7 +33,7 @@ def home(request):
     # the render function will find specific html file we appoint in templates folder for individual application
     # send different context in the same template -> generating html dynamically  
     return render(request= request, 
-                  template_name= "posts/home.html",
+                  template_name= "posts/index.html",
                   context= {"posts": posts,
                             "username": "taranjot"}
                   )# remember using dictionary (key-value pair) to render different context dynamically
@@ -65,10 +65,4 @@ def post(request,
     else:
         return HttpResponseNotFound("Post Not Available 😀")
     
-
-def google(request, id):
-    # track and get the whole url even the name of root url was changed
-    url = reverse("post", args= [id])
-    print(url)
-    return HttpResponseRedirect(url)
 
