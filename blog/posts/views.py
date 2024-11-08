@@ -30,23 +30,13 @@ def home(request):
     # print(name)
     print(reverse("home"))
 
-
-    html = ""
-
-    for post in posts:
-        html += f"""
-                <div>
-                <a href="/posts/{post["id"]}/"    
-                    <h1>{post["id"]} - {post["title"]}</h1></a>
-                    <p>{post["content"]}</p>
-                </div>
-"""
-    name = "Jeff Bezos"
     # the render function will find specific html file we appoint in templates folder for individual application
     # send different context in the same template -> generating html dynamically  
     return render(request= request, 
-                  template_name= "home.html", 
-                  context= {"name": name, "list": ["Carrot"]})# remember using dictionary (key-value pair) to render different context dynamically
+                  template_name= "posts/home.html",
+                  context= {"posts": posts,
+                            "username": "taranjot"}
+                  )# remember using dictionary (key-value pair) to render different context dynamically
 
 
 def post(request, 
@@ -65,13 +55,13 @@ def post(request,
             post_dict = post
             is_valid = True
             break
+
     
     if (is_valid):
-        html = f"""
-            <h1>{post_dict["title"]}</h1>
-            <p>{post_dict["content"]}</p>
-    """
-        return HttpResponse(html)
+        return render(request = request,
+                      template_name = "posts/post.html",
+                      context = {"post_dict": post_dict}
+                      )
     else:
         return HttpResponseNotFound("Post Not Available 😀")
     
