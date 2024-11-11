@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import (HttpResponse,
                          HttpResponseNotFound,
-                         HttpResponseRedirect)
+                         Http404)
 
 from django.urls import reverse
 from django.shortcuts import render
@@ -26,6 +26,8 @@ posts = [
     }
 ]
 
+
+
 def home(request):
     # print(name)
     print(reverse("home"))
@@ -34,8 +36,7 @@ def home(request):
     # send different context in the same template -> generating html dynamically  
     return render(request= request, 
                   template_name= "posts/index.html",
-                  context= {"posts": posts,
-                            "username": "taranjot"}
+                  context= {"posts": posts}
                   )# remember using dictionary (key-value pair) to render different context dynamically
 
 
@@ -63,6 +64,7 @@ def post(request,
                       context = {"post_dict": post_dict}
                       )
     else:
-        return HttpResponseNotFound("Post Not Available 😀")
+        # return HttpResponseNotFound("<h1>Post Not Available 😀</h1>")
+        raise Http404()
     
 

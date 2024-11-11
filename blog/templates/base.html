@@ -91,10 +91,12 @@
                                 Categories
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Category</a></li>
-                                <li><a class="dropdown-item" href="#">Category 2</a></li>
-
-                             
+                                {% block categories %}
+                                    {% for category in categories %}
+                                        <li><a class="dropdown-item" href="#">{{category}}</a></li>
+                                    {% endfor %}
+                                {% endblock categories %}
+                            
                             </ul>
                         </li>
                     </ul>
@@ -120,6 +122,7 @@
 {% block body %}
 
 {% endblock body %}
+
 
 
 
