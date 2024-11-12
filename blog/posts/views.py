@@ -5,6 +5,7 @@ from django.http import (HttpResponse,
 
 from django.urls import reverse
 from django.shortcuts import render
+from .models import Post
 
 # Create your views here.
 
@@ -32,11 +33,13 @@ def home(request):
     # print(name)
     print(reverse("home"))
 
+    results = Post.objects.all()
+
     # the render function will find specific html file we appoint in templates folder for individual application
     # send different context in the same template -> generating html dynamically  
     return render(request= request, 
                   template_name= "posts/index.html",
-                  context= {"posts": posts}
+                  context= {"posts": results}
                   )# remember using dictionary (key-value pair) to render different context dynamically
 
 
