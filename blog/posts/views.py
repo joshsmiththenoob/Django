@@ -6,6 +6,7 @@ from django.http import (HttpResponse,
 from django.urls import reverse
 from django.shortcuts import render
 from .models import Post
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -49,25 +50,22 @@ def post(request,
     Django regard value of Path Variable in URL as String
     """
     print(type(id))
-
-
-    # Space Complexity O(n)
-    post_dict = dict()
-    is_valid = False
-    for post in posts:
-        if post["id"] == id:
-            post_dict = post
-            is_valid = True
-            break
-
     
-    if (is_valid):
-        return render(request = request,
-                      template_name = "posts/post.html",
-                      context = {"post_dict": post_dict}
-                      )
-    else:
-        # return HttpResponseNotFound("<h1>Post Not Available 😀</h1>")
-        raise Http404()
-    
+    result = get_object_or_404(Post, id= id)
 
+    return render(request = request,
+                    template_name = "posts/post.html",
+                    context = {"post_dict": result}
+                    )
+
+    ## the get_object_or_404 shortcut's function is as same as the try, except if we want to get specific record like beloe example 
+    # try:
+    #     result = Post.objects.get(id= id)
+    #     return render(request = request,
+    #                   template_name = "posts/post.html",
+    #                   context = {"post_dict": result}
+    #                   )
+    # except:
+    #     # return HttpResponseNotFound("<h1>Post Not Available 😀</h1>")
+    #     raise Http404() # Raise Http 404: Django will show 404 page
+    
